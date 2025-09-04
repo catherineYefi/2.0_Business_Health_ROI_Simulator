@@ -671,7 +671,7 @@ def create_enhanced_visualization(projections, problem_zones, industry):
         )
     
     fig.update_layout(
-        height=700,
+        height=600,
         title=f'🚀 ИИ-прогноз для {industry} (Уверенность: {projections["confidence"]*100:.0f}%)',
         hovermode='x unified'
     )
@@ -835,6 +835,14 @@ def create_ultimate_ai_interface():
     .metric-card {
         background: white; border-radius: 10px; padding: 1.5rem; margin: 0.5rem;
         border-left: 4px solid #007bff; box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    .plot-container {
+    height: 600px !important;
+    min-height: 600px !important;
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    padding: 1rem;
+    background: white;
     }
     """
     
@@ -1027,21 +1035,22 @@ def create_ultimate_ai_interface():
                 </div>
                 """)
         
-        # РЕЗУЛЬТАТЫ ИИ-АНАЛИЗА (скрыто до анализа)
-        with gr.Row(visible=False) as results_row:
-            with gr.Column(scale=2):
-                # Сводка ИИ-анализа
-                ai_analysis_summary = gr.HTML(elem_classes=["ai-insight"])
-                
-                # Интерактивная визуализация
-                interactive_chart = gr.Plot(height=600)
-            
-            with gr.Column(scale=1):
-                # ИИ-рекомендации
-                ai_recommendations_output = gr.HTML(elem_classes=["ai-suggestion"])
-                
-                # Критические зоны
-                critical_zones_alert = gr.HTML()
+       # РЕЗУЛЬТАТЫ ИИ-АНАЛИЗА (скрыто до анализа)
+    with gr.Row(visible=False) as results_row:
+        with gr.Column(scale=2):
+            # Сводка ИИ-анализа
+            ai_analysis_summary = gr.HTML(elem_classes=["ai-insight"])
+        
+        # Интерактивная визуализация в контейнере с фиксированной высотой
+            with gr.HTML(elem_classes=["plot-container"]):
+                interactive_chart = gr.Plot()
+    
+        with gr.Column(scale=1):
+        # ИИ-рекомендации
+            ai_recommendations_output = gr.HTML(elem_classes=["ai-suggestion"])
+        
+        # Критические зоны
+            critical_zones_alert = gr.HTML()
         
         # 90-ДНЕВНЫЙ ПЛАН (скрыто до анализа)
         with gr.Row(visible=False) as action_plan_row:
